@@ -32,6 +32,8 @@ class EmployeePanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->brandName('HRISV02')
+            ->sidebarCollapsibleOnDesktop()
+            // ->sidebarFullyCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Employee/Resources'), for: 'App\\Filament\\Employee\\Resources')
             ->discoverPages(in: app_path('Filament/Employee/Pages'), for: 'App\\Filament\\Employee\\Pages')
             ->pages([
