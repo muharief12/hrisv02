@@ -18,7 +18,7 @@ class Attendance extends Model
     // relationship db
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function dailyTasks(): HasMany

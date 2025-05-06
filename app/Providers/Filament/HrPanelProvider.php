@@ -18,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Shanerbaner82\PanelRoles\PanelRoles;
 
 class HrPanelProvider extends PanelProvider
 {
@@ -31,6 +32,7 @@ class HrPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Green,
             ])
+            ->brandName('HRISV02')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -54,6 +56,9 @@ class HrPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make(),
+                // PanelRoles::make()
+                //     ->roleToAssign('hr')
+                //     ->restrictedRoles(['super_admin', 'Employee']),
             ])
             ->authMiddleware([
                 Authenticate::class,

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\HRPolicySettingResource\Pages;
-use App\Filament\Resources\HRPolicySettingResource\RelationManagers;
-use App\Models\HRPolicySetting;
+use App\Filament\Resources\AttendanceResource\Pages;
+use App\Filament\Resources\AttendanceResource\RelationManagers;
+use App\Models\Attendance;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,51 +12,51 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
-class HRPolicySettingResource extends Resource
+class AttendanceResource extends Resource
 {
-    protected static ?string $model = HRPolicySetting::class;
-    protected static ?string $navigationLabel = 'HR Policy & Settings';
-    protected static ?string $breadcrumb = 'HR Policy & Settings';
+    protected static ?string $model = Attendance::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('tax')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TimePicker::make('start_hour')
-                    ->native(false)
-                    ->hoursStep(2)
-                    ->minutesStep(15)
-                    ->secondsStep(10)
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
                     ->required(),
-                Forms\Components\TimePicker::make('end_hour')
-                    ->native(false)
-                    ->hoursStep(2)
-                    ->minutesStep(15)
-                    ->secondsStep(10)
+                Forms\Components\DatePicker::make('date')
                     ->required(),
-                Forms\Components\TextInput::make('late_punishment')
+                Forms\Components\TextInput::make('start_time')
+                    ->required(),
+                Forms\Components\TextInput::make('end_time')
+                    ->required(),
+                Forms\Components\TextInput::make('pefomance_rate')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->default(0),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            // ->modifyQueryUsing(
+            //     fn(Builder $query) =>
+            //     $query->where('user_id', Auth::id()) // filter sesuai user login
+            // )
             ->columns([
-                Tables\Columns\TextColumn::make('tax')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
-                    ->suffix(' %')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('start_hour'),
-                Tables\Columns\TextColumn::make('end_hour'),
-                Tables\Columns\TextColumn::make('late_punishment')
-                    ->suffix(' %')
+                Tables\Columns\TextColumn::make('date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('start_time'),
+                Tables\Columns\TextColumn::make('end_time'),
+                Tables\Columns\TextColumn::make('pefomance_rate')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
@@ -77,7 +77,6 @@ class HRPolicySettingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -96,14 +95,9 @@ class HRPolicySettingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListHRPolicySettings::route('/'),
-            'create' => Pages\CreateHRPolicySetting::route('/create'),
-            'edit' => Pages\EditHRPolicySetting::route('/{record}/edit'),
+            'index' => Pages\ListAttendances::route('/'),
+            'create' => Pages\CreateAttendance::route('/create'),
+            'edit' => Pages\EditAttendance::route('/{record}/edit'),
         ];
-    }
-
-    public static function canCreate(): bool
-    {
-        return HRPolicySetting::count() < 1;
     }
 }
