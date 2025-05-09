@@ -36,8 +36,8 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('avatar')
-                    ->maxLength(255)
+                Forms\Components\FileUpload::make('avatar')
+                    ->image()
                     ->default(null),
                 Forms\Components\TextInput::make('phone_number')
                     ->tel()
@@ -49,7 +49,12 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('position')
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('level'),
+                Forms\Components\Select::make('level')
+                    ->options([
+                        'staff' => 'Staff',
+                        'supervisor' => 'Supervisor',
+                        'manager' => 'Manager',
+                    ]),
                 Forms\Components\TextInput::make('salary')
                     ->numeric()
                     ->default(null),
