@@ -172,7 +172,7 @@ class SalaryResource extends Resource
         return [
             'index' => Pages\ListSalaries::route('/'),
             'create' => Pages\CreateSalary::route('/create'),
-            'edit' => Pages\EditSalary::route('/{record}/edit'),
+            // 'edit' => Pages\EditSalary::route('/{record}/edit'),
         ];
     }
 }
