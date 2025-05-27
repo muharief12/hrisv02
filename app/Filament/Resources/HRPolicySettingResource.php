@@ -27,21 +27,25 @@ class HRPolicySettingResource extends Resource
                 Forms\Components\TextInput::make('tax')
                     ->required()
                     ->numeric(),
-                Forms\Components\TimePicker::make('start_hour')
-                    ->native(false)
-                    ->hoursStep(2)
-                    ->minutesStep(15)
-                    ->secondsStep(10)
+                Forms\Components\TextInput::make('start_hour')
                     ->required(),
-                Forms\Components\TimePicker::make('end_hour')
-                    ->native(false)
-                    ->hoursStep(2)
-                    ->minutesStep(15)
-                    ->secondsStep(10)
+                Forms\Components\TextInput::make('end_hour')
                     ->required(),
                 Forms\Components\TextInput::make('late_punishment')
                     ->required()
                     ->numeric(),
+                Forms\Components\FileUpload::make('logo')
+                    ->directory('image')
+                    ->default(null),
+                Forms\Components\FileUpload::make('signature')
+                    ->directory('image')
+                    ->default(null),
+                Forms\Components\TextInput::make('account_name')
+                    ->maxLength(255)
+                    ->default(null),
+                Forms\Components\TextInput::make('account_number')
+                    ->maxLength(255)
+                    ->default(null),
             ]);
     }
 
@@ -51,14 +55,18 @@ class HRPolicySettingResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('tax')
                     ->numeric()
-                    ->suffix(' %')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_hour'),
                 Tables\Columns\TextColumn::make('end_hour'),
                 Tables\Columns\TextColumn::make('late_punishment')
-                    ->suffix(' %')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\ImageColumn::make('logo'),
+                Tables\Columns\ImageColumn::make('signature'),
+                Tables\Columns\TextColumn::make('account_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('account_number')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -77,7 +85,6 @@ class HRPolicySettingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

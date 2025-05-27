@@ -61,7 +61,8 @@
 
 <body>
     <div class="container">
-        <center><img src="{{ public_path('images/logo.jpg')}}" style="width: 15%" alt=""></center>
+        <!-- <center><img src="{{ public_path('image/logo.jpg')}}" style="width: 15%" alt=""></center> -->
+        <center><img src="{{ public_path(Storage::url($policy->logo))}}" style="width: 30%" alt=""></center>
         <h2>Payroll Report</h2>
         <div class="info">
             <table>
@@ -94,12 +95,12 @@
                     <td>: {{ $record->user->level }}</td>
                 </tr>
                 <tr>
-                    <td>Account Number</td>
-                    <td>: {{ $record->account_number ?? '-' }}</td>
+                    <td>Account Number (Sender)</td>
+                    <td>: {{ $policy->account_number ?? '-' }}</td>
                 </tr>
                 <tr>
-                    <td>Bank Name</td>
-                    <td>: {{ $record->account_name ?? '-' }}</td>
+                    <td>Bank Name (Sender)</td>
+                    <td>: {{ $policy->account_name ?? '-' }}</td>
                 </tr>
             </table>
         </div>
@@ -129,7 +130,8 @@
             <p>Yogyakarta, {{ Carbon\Carbon::parse($record->created_at)->translatedFormat('d F Y') }}</p>
             <p>Vice of HR Department,</p>
             <br>
-            <img src="{{ public_path('images/signature.png') }}" style="width: 15%;" alt="">
+            <!-- <img src="{{ public_path('images/signature.png') }}" style="width: 15%;" alt=""> -->
+            <img src="{{ public_path(Storage::url($policy->signature)) }}" style="width: 15%;" alt="">
             <p><strong>James Setiawan. S.H., M.M.</strong></p>
         </div>
     </div>

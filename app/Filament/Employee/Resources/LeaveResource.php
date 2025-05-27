@@ -44,10 +44,13 @@ class LeaveResource extends Resource
                     ->default(1)
                     ->numeric(),
                 Forms\Components\FileUpload::make('attachment')
-                    ->acceptedFileTypes(['application/pdf'])
+                    ->acceptedFileTypes(['application/pdf', 'image'])
                     ->mimeTypeMap([
-                        'pdf' => 'application/pdf'
+                        'pdf' => 'application/pdf',
+                        'image' => 'jpg,png',
                     ])
+                    ->image()
+                    ->directory('leave_attachments')
                     ->maxSize(2048)
                     ->default(null)->columnSpanFull(),
                 Hidden::make('status')
@@ -73,10 +76,10 @@ class LeaveResource extends Resource
                 Tables\Columns\TextColumn::make('duration')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('attachment')
+                Tables\Columns\ImageColumn::make('attachment'),
+                Tables\Columns\TextColumn::make('status')
                     ->searchable()
                     ->default('submission'),
-                Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()

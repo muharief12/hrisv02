@@ -20,10 +20,10 @@ class ListAttendances extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            // Actions\CreateAction::make(),
             Action::make('Presensi')
                 ->extraAttributes(['class' => 'text-center'])
-                ->label('Presensi Hari Ini')
+                ->label('Presence Today')
                 ->icon('heroicon-m-finger-print')
                 ->color('success')
                 ->form([
@@ -47,7 +47,7 @@ class ListAttendances extends ListRecords
                             'performance' => 0,
                         ]);
                         Notification::make()
-                            ->title('Presensi Hadir berhasil dicatat.')
+                            ->title('The Work Attendance Successfully Recorded.')
                             ->success()
                             ->send();
                     } elseif (!$attendance->end_time) {
@@ -55,12 +55,12 @@ class ListAttendances extends ListRecords
                             'end_time' => $now->toTimeString(),
                         ]);
                         Notification::make()
-                            ->title('Presensi Pulang berhasil dicatat.')
+                            ->title('The End of Work Attendance Successfully Recorded.')
                             ->success()
                             ->send();
                     } else {
                         Notification::make()
-                            ->title('Presensi hari ini sudah lengkap.')
+                            ->title('Sorry, The attendance has been completed.')
                             ->danger()
                             ->send();
                     }

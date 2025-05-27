@@ -13,7 +13,7 @@ class ListHRPolicySettings extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('New HR Policy Settings'),
+            Actions\CreateAction::make(),
         ];
     }
 }
